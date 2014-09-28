@@ -3,9 +3,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let s:prefix = expand("<sfile>:p:h:h:t")
-
-
 function! s:_vital_loaded(V)
 	let s:V = a:V
 	let s:Tabpage = s:V.import("Gift.Tabpage")
@@ -16,6 +13,12 @@ function! s:_vital_depends()
 	return [
 \		"Gift.Tabpage",
 \	]
+endfunction
+
+
+let s:prefix = expand("<sfile>:p:h:h:t")
+function! s:set_prefix(prefix)
+	let s:prefix = a:prefix
 endfunction
 
 
@@ -124,7 +127,7 @@ endfunction
 
 
 function! s:execute(nr, expr)
-	let current = s:uniqnr()
+	let current = s:uniq_nr()
 	let result = s:jump(a:nr)
 	if result == -1
 		return -1
