@@ -95,7 +95,7 @@ find({string})					*Vital.Gift.find()*
 	"tabnr" : タブページ番号
 	"winnr" : ウィンドウ番号
 Example: >
-	" gift.vim という名前のバッファ名を探す
+	" gift.vim という名前のバッファ名が開かれているウィンドウ位置を探す
 	echo Vital.Gift.find("bufname(bufnr) == 'gift.vim'")
 	" => [[2, 1], [2, 2]]
 
