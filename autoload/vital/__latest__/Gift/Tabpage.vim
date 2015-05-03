@@ -2,6 +2,17 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! s:_vital_loaded(V)
+	let s:V = a:V
+	let s:P = s:V.import("Gift.Polyfill")
+endfunction
+
+
+function! s:_vital_depends()
+	return [
+\		"Gift.Polyfill"
+\	]
+endfunction
 
 let s:prefix = expand("<sfile>:p:h:h:t")
 
@@ -23,7 +34,7 @@ endfunction
 
 function! s:uniq_nr(...)
 	let tabnr = get(a:, 1, tabpagenr())
-	let uniq_nr = gettabvar(tabnr, s:prefix . "_gift_uniq_tabpagenr", -1)
+	let uniq_nr = s:P.gettabvar(tabnr, s:prefix . "_gift_uniq_tabpagenr", -1)
 	if uniq_nr == -1
 		let uniq_nr = s:numbering(tabnr)
 	endif

@@ -6,12 +6,14 @@ set cpo&vim
 function! s:_vital_loaded(V)
 	let s:V = a:V
 	let s:Tabpage = s:V.import("Gift.Tabpage")
+	let s:P = s:V.import("Gift.Polyfill")
 endfunction
 
 
 function! s:_vital_depends()
 	return [
 \		"Gift.Tabpage",
+\		"Gift.Polyfill"
 \	]
 endfunction
 
@@ -25,7 +27,6 @@ endfunction
 function! s:flatten(list)
 	return eval(join(a:list, "+"))
 endfunction
-
 
 
 function! s:tabpagewinnr_list()
@@ -52,7 +53,7 @@ endfunction
 function! s:uniq_nr(...)
 	let winnr = get(a:, 1, winnr())
 	let tabnr = get(a:, 2, tabpagenr())
-	let uniq_nr = gettabwinvar(tabnr, winnr, s:prefix . "_gift_uniq_winnr", -1)
+	let uniq_nr = s:P.gettabwinvar(tabnr, winnr, s:prefix . "_gift_uniq_winnr", -1)
 	if uniq_nr == -1
 		let uniq_nr = s:numbering(winnr, tabnr)
 	endif
@@ -83,7 +84,7 @@ endfunction
 function! s:getvar(nr, varname, ...)
 	let def = get(a:, 1, "")
 	let [tabnr, winnr] = s:tabpagewinnr(a:nr)
-	return gettabwinvar(tabnr, winnr, a:varname, def)
+	return s:P.gettabwinvar(tabnr, winnr, a:varname, def)
 endfunction
 
 
